@@ -1,0 +1,26 @@
+# Septic Tank Design Parameters
+
+# Get user inputs
+household_size = int(input("Enter the number of people in the household: "))
+wastewater_per_person = float(input("Enter the amount of wastewater generated per person (in liters/day): "))
+retention_time = float(input("Enter the retention time (in days, typically 1-3): "))
+tank_depth = float(input("Enter the desired tank depth (in meters): "))
+
+# Calculations
+total_daily_flow = household_size * wastewater_per_person  # liters/day
+total_volume = total_daily_flow * retention_time  # liters
+
+# Convert total volume to cubic meters (since 1 cubic meter = 1000 liters)
+total_volume_m3 = total_volume / 1000  # cubic meters
+
+# Assume a rectangular tank
+# Volume = Length * Width * Depth
+# Rearranging for Length and Width assuming Depth is fixed
+tank_length = (total_volume_m3 / tank_depth) ** 0.5  # meters
+tank_width = total_volume_m3 / (tank_length * tank_depth)  # meters
+
+# Output results
+print("\nSeptic Tank Design:")
+print(f"Total daily flow: {total_daily_flow:.2f} liters/day")
+print(f"Total tank volume required: {total_volume:.2f} liters ({total_volume_m3:.2f} cubic meters)")
+print(f"Tank dimensions (L × W × D): {tank_length:.2f} meters × {tank_width:.2f} meters × {tank_depth:.2f} meters")
