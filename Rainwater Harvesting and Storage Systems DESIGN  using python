@@ -1,0 +1,37 @@
+# Define the variables
+def rainwater_harvesting(catchment_area, rainfall, runoff_coefficient, tank_capacity):
+    # catchment_area: in square meters (m²)
+    # rainfall: average annual rainfall in millimeters (mm)
+    # runoff_coefficient: typically between 0.75 and 0.85
+    # tank_capacity: in liters (L)
+
+    # Convert rainfall from mm to meters
+    rainfall_in_meters = rainfall / 1000  # Convert mm to meters
+
+    # Calculate the total volume of water that can be harvested (m³)
+    harvested_water_volume = catchment_area * rainfall_in_meters * runoff_coefficient  # in cubic meters
+
+    # Convert harvested water volume to liters (1 cubic meter = 1000 liters)
+    harvested_water_liters = harvested_water_volume * 1000
+
+    # Determine if the harvested water exceeds the tank capacity
+    if harvested_water_liters > tank_capacity:
+        excess_water = harvested_water_liters - tank_capacity
+        print(f"Your tank will overflow by {excess_water:.2f} liters.")
+    else:
+        remaining_capacity = tank_capacity - harvested_water_liters
+        print(f"Your tank will have {remaining_capacity:.2f} liters of remaining capacity.")
+
+    print(f"Total harvested water: {harvested_water_liters:.2f} liters.")
+    return harvested_water_liters
+
+
+# Example usage:
+# Define parameters
+catchment_area = 100  # Roof area in square meters
+rainfall = 800  # Average annual rainfall in mm
+runoff_coefficient = 0.85  # Efficiency of water collection
+tank_capacity = 50000  # Tank capacity in liters
+
+# Call the function
+rainwater_harvesting(catchment_area, rainfall, runoff_coefficient, tank_capacity)
