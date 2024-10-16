@@ -1,0 +1,89 @@
+import math
+
+# Constants
+gravity = 9.81  # Gravity in m/s²
+water_density = 1000  # Density of water in kg/m³
+
+# Function to calculate flow rate
+def calculate_flow_rate(population, demand_per_person):
+    """
+    Calculate total water demand for a given population.
+    
+    Args:
+    population (int): Total number of people.
+    demand_per_person (float): Water demand per person per day (liters).
+    
+    Returns:
+    total_flow_rate (float): Total water flow rate (liters per second).
+    """
+    daily_demand = population * demand_per_person  # liters/day
+    total_flow_rate = daily_demand / (24 * 60 * 60)  # liters per second
+    return total_flow_rate
+
+
+# Function to calculate pipe diameter (using Hazen-Williams equation)
+def calculate_pipe_diameter(flow_rate, length, pressure_loss, roughness=140):
+    """
+    Calculate the pipe diameter based on the Hazen-Williams equation.
+    
+    Args:
+    flow_rate (float): Flow rate in liters per second.
+    length (float): Length of the pipe in meters.
+    pressure_loss (float): Allowed pressure loss in meters.
+    roughness (float): Hazen-Williams roughness coefficient (140 for new pipes).
+    
+    Returns:
+    diameter (float): Required pipe diameter in meters.
+    """
+    flow_rate_m3s = flow_rate / 1000  # Convert to cubic meters per second
+    pipe_diameter = (flow_rate_m3s / (0.849 * roughness * math.sqrt(pressure_loss / length)))**0.38
+    return pipe_diameter
+
+
+# Function to calculate pressure loss using Darcy-Weisbach equation
+def calculate_pressure_loss(flow_rate, pipe_diameter, pipe_length, pipe_roughness):
+    """
+    Calculate pressure loss in a pipe using Darcy-Weisbach equation.
+    
+    Args:
+    flow_rate (float): Flow rate in liters per second.
+    pipe_diameter (float): Pipe diameter in meters.
+    pipe_length (float): Length of the pipe in meters.
+    pipe_roughness (float): Pipe roughness coefficient.
+    
+    Returns:
+    pressure_loss (float): Pressure loss in Pascals (Pa).
+    """
+    velocity = flow_rate / (math.pi * (pipe_diameter / 2) ** 2)  # Flow velocity (m/s)
+    reynolds_number = (velocity * pipe_diameter) / (pipe_roughness / 1000)  # Reynolds number
+    friction_factor = 0.25 / (math.log10(pipe_roughness / (3.7 * pipe_diameter) + 5.74 / reynolds_number ** 0.9)) ** 2
+    pressure_loss = friction_factor * (pipe_length / pipe_diameter) * (water_density * velocity ** 2) / 2
+    return pressure_loss
+
+
+# Main function to design the system
+def water_distribution_system_design(population, demand_per_person, pipe_length, pressure_loss):
+    """
+    Design the water distribution system by calculating the required flow rate,
+    pipe diameter, and pressure loss.
+    
+    Args:
+    population (int): Total number of people in the community.
+    demand_per_person (float): Water demand per person per day (liters).
+    pipe_length (float): Length of the pipe in meters.
+    pressure_loss (float): Allowed pressure loss in meters.
+    
+    Returns:
+    results (dict): Flow rate, pipe diameter, and pressure loss.
+    """
+    # Step 1: Calculate total flow rate
+    flow_rate = calculate_flow_rate(population, demand_per_person)
+    
+    # Step 2: Calculate required pipe diameter
+    pipe_diameter = calculate_pipe_diameter(flow_rate, pipe_length, pressure_loss)
+    
+    # Step 3: Calculate actual pressure loss
+    actual_pressure_loss = calculate_pressure_loss(flow_rate, pipe_diameter, pipe_length, 0.1)  # Assume pipe roughness 0.1 mm
+    
+    results = {
+        "Total Flow Rate (L/s)": flow_rate,
