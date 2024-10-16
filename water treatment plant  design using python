@@ -1,0 +1,54 @@
+def get_water_parameters():1. Input Parameters
+    parameters = {
+        'turbidity': float(input("Enter initial turbidity (NTU): ")),
+        'pH': float(input("Enter pH value: ")),
+        'bacteria_count': float(input("Enter bacteria count (CFU/mL): ")),
+        'organic_matter': float(input("Enter organic matter concentration (mg/L): "))
+    }
+    return parameters
+2.COAGULATION
+def coagulation(turbidity, coagulant_dose):
+    # Simple reduction formula: turbidity after coagulation = initial turbidity - coagulant effect
+    return max(0, turbidity - coagulant_dose * 5)  # Example: each mg/L dose reduces turbidity by 5 NTU
+3. Sedimentation Process
+def sedimentation(turbidity):
+    # Assuming a 70% reduction in turbidity after sedimentation
+    return turbidity * 0.3
+4. Filtration Process
+def filtration(turbidity):
+    # Further reduce turbidity by 90% in filtration
+    return turbidity * 0.1
+5. Disinfection Process
+def disinfection(bacteria_count, chlorine_dose):
+    # Example: chlorine dose reduces bacteria by 99% for each mg/L
+    return bacteria_count * (1 - 0.99 * chlorine_dose)
+6. Main Function
+def water_treatment_plant():
+    # Get initial water quality parameters
+    parameters = get_water_parameters()
+    
+    # Step 1: Coagulation
+    coagulant_dose = float(input("Enter coagulant dose (mg/L): "))
+    turbidity_after_coagulation = coagulation(parameters['turbidity'], coagulant_dose)
+    print(f"Turbidity after coagulation: {turbidity_after_coagulation} NTU")
+    
+    # Step 2: Sedimentation
+    turbidity_after_sedimentation = sedimentation(turbidity_after_coagulation)
+    print(f"Turbidity after sedimentation: {turbidity_after_sedimentation} NTU")
+    
+    # Step 3: Filtration
+    turbidity_after_filtration = filtration(turbidity_after_sedimentation)
+    print(f"Turbidity after filtration: {turbidity_after_filtration} NTU")
+    
+    # Step 4: Disinfection
+    chlorine_dose = float(input("Enter chlorine dose (mg/L): "))
+    bacteria_after_disinfection = disinfection(parameters['bacteria_count'], chlorine_dose)
+    print(f"Bacteria count after disinfection: {bacteria_after_disinfection} CFU/mL")
+    
+    # Final Output
+    print("\nWater Treatment Process Completed.")
+    print(f"Final turbidity: {turbidity_after_filtration} NTU")
+    print(f"Final bacteria count: {bacteria_after_disinfection} CFU/mL")
+
+# Run the treatment simulation
+water_treatment_plant()
