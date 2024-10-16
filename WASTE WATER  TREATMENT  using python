@@ -1,0 +1,52 @@
+class WasteWaterTreatment:
+    def __init__(self, contaminants):
+        """
+        Initialize with a dictionary of contaminants and their initial concentrations.
+        :param contaminants: dict with contaminant name as key and concentration as value
+        """
+        self.contaminants = contaminants
+    
+    def primary_treatment(self):
+        """Simulate primary treatment by reducing contaminants."""
+        print("Starting primary treatment...")
+        for contaminant in self.contaminants:
+            # Simulate removal of solids, 40% efficiency for solids like sand, etc.
+            if contaminant == 'solids':
+                self.contaminants[contaminant] *= 0.6  # 40% removal
+        print(f"After primary treatment: {self.contaminants}")
+
+    def secondary_treatment(self):
+        """Simulate secondary treatment using biological processes."""
+        print("Starting secondary treatment...")
+        for contaminant in self.contaminants:
+            # Simulate biological treatment, 70% efficiency for organic materials like BOD
+            if contaminant == 'organic':
+                self.contaminants[contaminant] *= 0.3  # 70% removal
+        print(f"After secondary treatment: {self.contaminants}")
+
+    def tertiary_treatment(self):
+        """Simulate tertiary treatment using chemical and filtration methods."""
+        print("Starting tertiary treatment...")
+        for contaminant in self.contaminants:
+            # Simulate filtration, 90% efficiency for small particles or chemicals like nitrates
+            if contaminant == 'nitrates':
+                self.contaminants[contaminant] *= 0.1  # 90% removal
+        print(f"After tertiary treatment: {self.contaminants}")
+
+    def run_treatment(self):
+        """Run the full treatment process."""
+        self.primary_treatment()
+        self.secondary_treatment()
+        self.tertiary_treatment()
+
+# Example contaminants and their initial concentrations (mg/L)
+contaminants = {
+    'solids': 300,  # in mg/L
+    'organic': 200,  # Biochemical Oxygen Demand (BOD) in mg/L
+    'nitrates': 50,  # in mg/L
+}
+
+# Create the treatment plant simulation
+treatment_plant = WasteWaterTreatment(contaminants)
+treatment_plant.run_treatment()
+
