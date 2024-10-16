@@ -1,0 +1,26 @@
+# Define the parameters
+def wash_project_design(population, water_per_person, latrine_per_person, days):
+    # population: total population of the community
+    # water_per_person: average daily water consumption per person in liters
+    # latrine_per_person: number of people per latrine
+    # days: project planning period in days
+
+    # Calculate total water demand
+    total_water_demand = population * water_per_person * days  # in liters
+
+    # Calculate the number of latrines required
+    total_latrines_required = population / latrine_per_person
+
+    print(f"Total water demand over {days} days: {total_water_demand:.2f} liters.")
+    print(f"Total latrines required for {population} people: {total_latrines_required:.2f} latrines.")
+    return total_water_demand, total_latrines_required
+
+
+# Example usage:
+population = 500  # Population of the community
+water_per_person = 50  # Average daily water consumption per person in liters
+latrine_per_person = 20  # 1 latrine per 20 people
+days = 30  # Project planning for 30 days
+
+# Call the function
+wash_project_design(population, water_per_person, latrine_per_person, days)
