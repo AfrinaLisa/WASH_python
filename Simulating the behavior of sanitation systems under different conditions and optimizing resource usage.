@@ -1,0 +1,14 @@
+import simpy
+
+# Create an environment
+env = simpy.Environment()
+
+# Define a water pump process
+def water_pump(env, capacity):
+    while True:
+        print(f"Water pump activated at {env.now}")
+        yield env.timeout(1 / capacity)
+
+# Add the water pump to the environment
+env.process(water_pump(env, 5))
+env.run(until=10)
