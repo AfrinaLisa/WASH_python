@@ -1,0 +1,11 @@
+import geopandas as gpd
+from shapely.geometry import Point
+
+# Load geographic data
+world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+locations = pd.DataFrame({'Latitude': [23.8103, 22.3475], 'Longitude': [90.4125, 91.8123]})
+locations['Coordinates'] = [Point(xy) for xy in zip(locations.Longitude, locations.Latitude)]
+
+# Convert to GeoDataFrame
+geo_locations = gpd.GeoDataFrame(locations, geometry='Coordinates')
+geo_locations.plot()
