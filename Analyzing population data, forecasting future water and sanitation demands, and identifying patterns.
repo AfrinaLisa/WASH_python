@@ -1,0 +1,23 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Load population and water usage data
+data = pd.read_csv('sanitation_data.csv')
+X = data[['Year']]
+y = data['WaterUsage']
+
+# Create a simple linear regression model
+model = LinearRegression()
+model.fit(X, y)
+
+# Forecast future water usage
+future_years = np.array([[2025], [2030], [2035]])
+predictions = model.predict(future_years)
+
+print("Forecasted Water Usage:", predictions)
+plt.plot(data['Year'], data['WaterUsage'], label='Historical Data')
+plt.plot(future_years, predictions, label='Forecast', linestyle='--')
+plt.legend()
+plt.show()
