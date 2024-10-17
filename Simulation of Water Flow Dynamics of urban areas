@@ -1,0 +1,18 @@
+import simpy
+
+# Create a simulation environment
+env = simpy.Environment()
+
+# Define a process to simulate water distribution
+def water_distribution(env, supply, demand):
+    while True:
+        print(f"Distributing water at {env.now}, Supply: {supply}, Demand: {demand}")
+        yield env.timeout(1)
+        supply -= demand
+        if supply < 0:
+            print("Supply is insufficient to meet the demand!")
+            break
+
+# Add the water distribution process to the environment
+env.process(water_distribution(env, supply=1000, demand=150))
+env.run(until=10)
