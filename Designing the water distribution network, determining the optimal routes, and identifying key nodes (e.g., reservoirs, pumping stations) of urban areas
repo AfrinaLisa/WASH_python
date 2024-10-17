@@ -1,0 +1,27 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create a graph to represent the water supply network
+G = nx.Graph()
+
+# Define key nodes (e.g., reservoir, pumping stations, neighborhoods)
+G.add_node("Reservoir")
+G.add_node("Pumping Station 1")
+G.add_node("Pumping Station 2")
+G.add_node("Residential Area A")
+G.add_node("Residential Area B")
+G.add_node("Commercial Zone")
+
+# Define edges (e.g., pipelines) and add capacities or distances as attributes
+G.add_edge("Reservoir", "Pumping Station 1", length=5, capacity=200)
+G.add_edge("Reservoir", "Pumping Station 2", length=6, capacity=200)
+G.add_edge("Pumping Station 1", "Residential Area A", length=3, capacity=100)
+G.add_edge("Pumping Station 1", "Commercial Zone", length=4, capacity=150)
+G.add_edge("Pumping Station 2", "Residential Area B", length=2, capacity=100)
+
+# Visualize the water distribution network
+pos = nx.spring_layout(G)
+nx.draw(G, pos, with_labels=True, node_color='lightblue', node_size=2000)
+nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'length'))
+plt.title("Urban Water Supply Network")
+plt.show()
