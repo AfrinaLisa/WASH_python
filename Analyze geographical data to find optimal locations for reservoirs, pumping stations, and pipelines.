@@ -1,0 +1,18 @@
+import geopandas as gpd
+from shapely.geometry import Point
+
+# Define some sample coordinates for urban features
+locations = {
+    'Reservoir': Point(90.4125, 23.8103),
+    'Pumping Station 1': Point(90.4140, 23.8120),
+    'Residential Area A': Point(90.4155, 23.8135),
+}
+
+# Create a GeoDataFrame
+gdf = gpd.GeoDataFrame([{'Name': key, 'geometry': value} for key, value in locations.items()])
+gdf.crs = "EPSG:4326"  # Define the coordinate reference system
+
+# Visualize the map
+gdf.plot(marker='o', color='blue', markersize=50)
+plt.title("Urban Water Supply Infrastructure Locations")
+plt.show()
