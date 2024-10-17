@@ -1,0 +1,18 @@
+from scipy.optimize import linprog
+
+# Example: minimize the cost of water distribution
+# Cost coefficients for each pipeline
+cost = [5, 6, 3, 4, 2]
+# Coefficients for the constraints (supply and demand)
+A = [[1, 0, 1, 0, 0],   # Reservoir to Pumping Station 1 and Residential Area A
+     [0, 1, 0, 1, 1]]   # Reservoir to Pumping Station 2 and Residential Area B
+# Supply capacities from each source
+b = [200, 200]
+
+# Bounds for each pipeline capacity
+x_bounds = (0, None)
+
+# Solve linear programming problem
+result = linprog(c=cost, A_ub=A, b_ub=b, bounds=[x_bounds]*5, method='highs')
+print("Optimal distribution cost:", result.fun)
+print("Optimal flow:", result.x)
