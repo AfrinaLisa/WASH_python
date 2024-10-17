@@ -1,0 +1,26 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Load water usage data (e.g., daily water usage per capita)
+data = pd.read_csv('urban_water_usage.csv')
+X = data[['Year']]
+y = data['DailyWaterUsagePerCapita']
+
+# Create a linear regression model to forecast future water demand
+model = LinearRegression()
+model.fit(X, y)
+
+# Forecast water demand for the next 10 years
+future_years = np.array([[2025], [2030], [2035], [2040], [2045]])
+predictions = model.predict(future_years)
+
+# Plot the results
+plt.plot(data['Year'], data['DailyWaterUsagePerCapita'], label='Historical Data')
+plt.plot(future_years, predictions, label='Forecast', linestyle='--')
+plt.xlabel('Year')
+plt.ylabel('Daily Water Usage (Liters per capita)')
+plt.title('Water Demand Forecast')
+plt.legend()
+plt.show()
