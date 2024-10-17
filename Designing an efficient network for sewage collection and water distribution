@@ -1,0 +1,16 @@
+import networkx as nx
+
+# Create a graph to represent the sanitation network
+G = nx.Graph()
+
+# Add nodes (representing water treatment plants, sewage systems, etc.)
+G.add_node("Water Treatment Plant")
+G.add_node("Residential Area 1")
+G.add_node("Sewage Treatment Plant")
+
+# Add edges (representing pipes and channels)
+G.add_edge("Water Treatment Plant", "Residential Area 1", length=5)
+G.add_edge("Residential Area 1", "Sewage Treatment Plant", length=3)
+
+# Visualize the network
+nx.draw(G, with_labels=True)
